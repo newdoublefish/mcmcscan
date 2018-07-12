@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">scan</string>
+    <string name="devices">测试</string>
+    <string name="history">历史记录</string>
+    <string name="settings">设置</string>
+    <string name="action_about">关于</string>
+    <string name="scan">扫描</string>
+    <string name="login">登入</string>
+</resources>
