@@ -17,6 +17,14 @@
         android:background="@drawable/shape"
         />
     <Button
+        android:id="@+id/jsonButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/json"
+        android:layout_above="@id/scanButton"
+        android:background="@drawable/shape"
+        />
+    <Button
         android:id="@+id/scanButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -8,4 +8,5 @@
     <color name="black">#000000</color>
     <color name="menu_bar">#244855</color>
     <color name="menu_bar_pressed">#8DA2AD</color>
+    <color name="swipe_background_color">#ffffff</color>
 </resources>

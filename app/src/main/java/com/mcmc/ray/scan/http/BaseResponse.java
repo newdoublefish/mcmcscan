@@ -1,16 +1,16 @@
 package com.mcmc.ray.scan.http;
 
 public class BaseResponse<T> {
-    private String request;
+    private String response;
     private String status;
     private T data;
 
-    public String getRequest() {
-        return request;
+    public String getResponse() {
+        return response;
     }
 
-    public void setRequest(String request) {
-        this.request = request;
+    public void setResponse(String response) {
+        this.response = response;
     }
 
     public String getStatus() {

@@ -8,25 +8,29 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.mcmc.ray.scan.R;
+import com.mcmc.ray.scan.beans.OrderBean;
 import com.mcmc.ray.scan.beans.UserBean;
 import com.mcmc.ray.scan.http.APIServiceImpl;
+import com.mcmc.ray.scan.http.BaseRequest;
 import com.mcmc.ray.scan.http.BaseResponse;
 import com.mcmc.ray.scan.util.LogUtil;
 import com.mcmc.ray.scan.util.ToastUtil;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
+import java.lang.reflect.Array;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import coder.mylibrary.base.BaseFragment;
-import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-//import io.reactivex.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import okhttp3.RequestBody;
-import rx.Scheduler;
 
 public class ScanFragment extends BaseFragment {
     private static ScanFragment scanFragment=null;
@@ -36,6 +40,8 @@ public class ScanFragment extends BaseFragment {
     Button scanButton;
     @BindView(R.id.loginButton)
     Button loginButton;
+    @BindView(R.id.jsonButton)
+    Button jsonButton;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         unbinder = ButterKnife.bind(this, view);
@@ -53,7 +59,7 @@ public class ScanFragment extends BaseFragment {
         return R.layout.fragment_scan;
     }
 
-    @OnClick({R.id.scanButton,R.id.loginButton})
+    @OnClick({R.id.scanButton,R.id.loginButton,R.id.jsonButton})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.scanButton:
@@ -65,7 +71,7 @@ public class ScanFragment extends BaseFragment {
                 UserBean userBean=new UserBean();
                 userBean.setUsername("admin");
                 userBean.setPassword("hello12345");
-                BaseResponse<UserBean> request = new BaseResponse<UserBean>();
+                BaseRequest<UserBean> request = new BaseRequest<UserBean>();
                 request.setRequest("login");
                 request.setData(userBean);
                 final Gson gson=new Gson();
@@ -91,6 +97,39 @@ public class ScanFragment extends BaseFragment {
                     });
                 ToastUtil.showShort(getHoldingActivity(),obj);
                 break;
+            case R.id.jsonButton:
+                OrderBean orderBean = new OrderBean();
+                orderBean.setFactory("广州锐速");
+                orderBean.setName("ECPADF-1234");
+                orderBean.setTotal(100);
+                List<OrderBean.Project> projects= new ArrayList<OrderBean.Project>();
+                OrderBean.Project op = new OrderBean.Project();
+                op.setName("上板");
+                op.setSn("xxxx");
+                op.setVendor("广州锐速");
+                List<OrderBean.Attribute> attributes = new ArrayList<OrderBean.Attribute>();
+                OrderBean.Attribute oa = new OrderBean.Attribute();
+                oa.setName("装置编号");
+                oa.setSn("xxxxx");
+                attributes.add(oa);
+                op.setAttribute(attributes);
+                List<OrderBean.Procedure> procedures = new ArrayList<>();
+                OrderBean.Procedure obp = new OrderBean.Procedure();
+                obp.setName("控制盒");
+                obp.setSn("0000012312312312");
+                obp.setVendor("广州锐速");
+                procedures.add(obp);
+                op.setProcedure(procedures);
+                projects.add(op);
+                orderBean.setProject(projects);
+                Gson gson1 = new Gson();
+                String orderBeanStr =gson1.toJson(orderBean);
+                LogUtil.d(orderBeanStr);
+
+                OrderBean orderBean1 = gson1.fromJson(orderBeanStr,OrderBean.class);
+                LogUtil.d(orderBean1.getProject().get(0).getName());
+
+                break;
         }
     }
 
@@ -112,5 +151,11 @@ public class ScanFragment extends BaseFragment {
                 }
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }
