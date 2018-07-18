@@ -7,7 +7,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.mcmc.ray.scan.R;
 import com.mcmc.ray.scan.beans.OrderBean;
 
-public class ProjectViewHolder extends BaseViewHolder<OrderBean> {
+public class ProjectViewHolder extends BaseViewHolder<OrderBean.Project> {
     TextView tv;
     public ProjectViewHolder(ViewGroup parent) {
         super(parent, R.layout.item_order);
@@ -16,7 +16,7 @@ public class ProjectViewHolder extends BaseViewHolder<OrderBean> {
     }
 
     @Override
-    public void setData(OrderBean data) {
+    public void setData(OrderBean.Project data) {
         super.setData(data);
         tv.setText(data.getName());
     }

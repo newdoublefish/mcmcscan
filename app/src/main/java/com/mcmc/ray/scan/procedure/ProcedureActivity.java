@@ -1,8 +1,7 @@
-package com.mcmc.ray.scan.project;
+package com.mcmc.ray.scan.procedure;
 
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -17,7 +16,7 @@ import butterknife.Unbinder;
 import coder.mylibrary.base.AppActivity;
 import coder.mylibrary.base.BaseFragment;
 
-public class ProjectActivity extends AppActivity {
+public class ProcedureActivity extends AppActivity {
     private long exitTime = 0;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -26,17 +25,17 @@ public class ProjectActivity extends AppActivity {
     private Unbinder unbinder;
     @Override
     protected int getFragmentContentId() {
-        return R.id.project_fragment;
+        return R.id.procedure_fragment;
     }
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_project;
+        return R.layout.activity_procedure;
     }
 
     @Override
     protected BaseFragment getFirstFragment() {
-        return ProjectFragment.getInstance();
+        return ProcedureFragment.getInstance();
     }
 
     @Override

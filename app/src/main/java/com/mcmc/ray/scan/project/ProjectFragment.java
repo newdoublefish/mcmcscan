@@ -1,5 +1,6 @@
 package com.mcmc.ray.scan.project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -9,6 +10,8 @@ import android.view.ViewStub;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.mcmc.ray.scan.R;
 import com.mcmc.ray.scan.beans.OrderBean;
+import com.mcmc.ray.scan.order.OrderAdapter;
+import com.mcmc.ray.scan.procedure.ProcedureActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +29,14 @@ public class ProjectFragment extends BaseFragment {
     @BindView(R.id.network_error_layout)
     ViewStub networkErrorLayout;
 
-    private ProjectAdapter orderAdapter;
+    private ProjectAdapter projectAdapter;
     private List<OrderBean> orderBeans;
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         unbinder = ButterKnife.bind(this, view);
         initRecyclerView();
         initData();
-        orderAdapter.addAll(orderBeans);
+        projectAdapter.addAll(orderBeans.get(0).getProject());
     }
 
     void initData()
@@ -72,11 +75,18 @@ public class ProjectFragment extends BaseFragment {
         RecyclerView.LayoutManager staggerdGridLayoutManager;
         staggerdGridLayoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         orderRecyclerView.setLayoutManager(staggerdGridLayoutManager);
-        orderAdapter=new ProjectAdapter(getHoldingActivity());
-        orderRecyclerView.setAdapter(orderAdapter);
+        projectAdapter=new ProjectAdapter(getHoldingActivity());
+        orderRecyclerView.setAdapter(projectAdapter);
         //recordAdapter.setMore(R.layout.load_more_layout,this);
         //recordAdapter.setNoMore(R.layout.no_more_layout);
-        orderAdapter.setError(R.layout.network_error);
+        projectAdapter.setError(R.layout.network_error);
+        projectAdapter.setOnItemClickListener(new OrderAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(getHoldingActivity(), ProcedureActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public static ProjectFragment getInstance()

@@ -11,7 +11,6 @@ public class OrderViewHolder extends BaseViewHolder<OrderBean> {
     TextView tv;
     public OrderViewHolder(ViewGroup parent) {
         super(parent, R.layout.item_order);
-
         tv=$(R.id.tv);
     }
 

@@ -7,7 +7,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.mcmc.ray.scan.beans.OrderBean;
 
-public class ProjectAdapter extends RecyclerArrayAdapter<OrderBean> {
+public class ProjectAdapter extends RecyclerArrayAdapter<OrderBean.Project> {
     public ProjectAdapter(Context context) {
         super(context);
     }

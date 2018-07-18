@@ -33,5 +33,11 @@
         <activity android:name=".home.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             />
+        <activity android:name=".project.ProjectActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity android:name=".procedure.ProcedureActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
     </application>
 </manifest>

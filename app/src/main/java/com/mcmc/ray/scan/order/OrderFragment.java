@@ -1,5 +1,6 @@
 package com.mcmc.ray.scan.order;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -9,6 +10,7 @@ import android.view.ViewStub;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.mcmc.ray.scan.R;
 import com.mcmc.ray.scan.beans.OrderBean;
+import com.mcmc.ray.scan.project.ProjectActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +79,13 @@ public class OrderFragment extends BaseFragment {
         //recordAdapter.setMore(R.layout.load_more_layout,this);
         //recordAdapter.setNoMore(R.layout.no_more_layout);
         orderAdapter.setError(R.layout.network_error);
+        orderAdapter.setOnItemClickListener(new OrderAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(getHoldingActivity(), ProjectActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public static OrderFragment getInstance()
