@@ -22,7 +22,7 @@
         <meta-data
             android:name="com.mcmc.ray.scan.application.CustomCachingGlideModule"
             android:value="GlideModule"/>
-        <activity android:name=".order.OrderActivity"
+        <activity android:name=".login.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"
             >
             <intent-filter>
@@ -31,6 +31,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".home.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity android:name=".order.OrderActivity"
             android:theme="@style/AppTheme.NoActionBar"
             />
         <activity android:name=".project.ProjectActivity"

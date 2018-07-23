@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">scan</string>
+    <string name="app_name">充电桩扫码工具</string>
     <string name="devices">测试</string>
     <string name="history">历史记录</string>
     <string name="settings">设置</string>
