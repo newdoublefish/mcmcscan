@@ -56,6 +56,8 @@ public class LoginFragment extends BaseFragment{
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
+                startActivity(new Intent(getActivity(), OrderActivity.class));
+                ActivityManager.getInstance().finishActivity();
                 UserBean userBean=new UserBean();
                 userBean.setUsername(userNameEditText.getText().toString());
                 userBean.setPassword(passwordEditText.getText().toString());

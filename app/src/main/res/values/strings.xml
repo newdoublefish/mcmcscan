@@ -8,4 +8,6 @@
     <string name="login">登入</string>
     <string name="json">JSON操作</string>
     <string name="commit">提交</string>
+    <string name="sn">编号</string>
+    <string name="vendor">厂商</string>
 </resources>

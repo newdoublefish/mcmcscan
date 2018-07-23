@@ -1,7 +1,10 @@
 package com.mcmc.ray.scan.procedure;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
@@ -12,6 +15,8 @@ import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.mcmc.ray.scan.R;
 import com.mcmc.ray.scan.beans.OrderBean;
+import com.mcmc.ray.scan.util.LogUtil;
+import com.mcmc.ray.scan.util.ToastUtil;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
@@ -34,7 +39,28 @@ public class ProcedureFragment extends BaseFragment {
     private AttrAdapter attrAdapter;
     private List<OrderBean> orderBeans;
     private int REQUEST_ATTR = 1;
+    private int REQUEST_PROCEDURE = 2;
     private int currentPosition;
+
+    private Handler mHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    //TODO 更新UI
+                    //如果有数据
+                    System.out.println("msg = " + msg.obj.toString());
+
+                    orderBeans.get(0).getProject().get(0).getProcedure().get(currentPosition).setVendor(msg.obj.toString());
+                    procedureAdapter.notifyDataSetChanged();
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        }
+    }) ;
+
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         unbinder = ButterKnife.bind(this, view);
@@ -66,11 +92,16 @@ public class ProcedureFragment extends BaseFragment {
         op.setAttribute(attributes);
         List<OrderBean.Procedure> procedures = new ArrayList<>();
         OrderBean.Procedure obp;
+        List<String> vendors;
         for(int i=0;i<10;i++) {
             obp = new OrderBean.Procedure();
             obp.setName("控制盒"+i);
             obp.setSn("0000012312312312");
             obp.setVendor("广州锐速");
+            vendors = new ArrayList<String>();
+            vendors.add("广州锐速");
+            vendors.add("珠海西格码");
+            obp.setDefaultVendor(vendors);
             procedures.add(obp);
         }
         op.setProcedure(procedures);
@@ -102,6 +133,22 @@ public class ProcedureFragment extends BaseFragment {
                     Toast.makeText(getHoldingActivity(), "解析二维码失败", Toast.LENGTH_LONG).show();
                 }
             }
+        }else if (requestCode == REQUEST_PROCEDURE) {
+            //处理扫描结果（在界面上显示）
+            if (null != data) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+                    Toast.makeText(getHoldingActivity(),"currentPosition"+currentPosition+ ";解析结果:" + result, Toast.LENGTH_LONG).show();
+                    orderBeans.get(0).getProject().get(0).getProcedure().get(currentPosition).setSn(result);
+                    procedureAdapter.notifyDataSetChanged();
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    Toast.makeText(getHoldingActivity(), "解析二维码失败", Toast.LENGTH_LONG).show();
+                }
+            }
         }
     }
     //Spinner 动态增加数据
@@ -118,6 +165,23 @@ public class ProcedureFragment extends BaseFragment {
 
         procedureRecyclerView.setLayoutManager(staggerdGridLayoutManager);
         procedureAdapter=new ProcedureAdapter(getHoldingActivity());
+        procedureAdapter.setmOnItemScanButtonClickListener(new ProcedureAdapter.OnItemScanButtonClickListener() {
+            @Override
+            public void onScanButtonClick(int position, BaseViewHolder holder) {
+
+                Intent intent = new Intent(getHoldingActivity(), CaptureActivity.class);
+                startActivityForResult(intent, REQUEST_PROCEDURE);
+                currentPosition = position;
+            }
+            @Override
+            public void OnItemSelectedListener(int position,String vendorName) {
+                ToastUtil.showShort(getActivity(),"position:"+position+":vendor:"+vendorName);
+                //orderBeans.get(0).getProject().get(0).getProcedure().get(position).setVendor(vendorName);
+                //procedureAdapter.notifyDataSetChanged();
+                currentPosition = position;
+                mHandler.obtainMessage(0,vendorName).sendToTarget();
+            }
+        });
         procedureRecyclerView.setAdapter(procedureAdapter);
 
 
@@ -138,8 +202,6 @@ public class ProcedureFragment extends BaseFragment {
             }
         });
         attrRecyclerView.setAdapter(attrAdapter);
-
-
     }
 
     public static ProcedureFragment getInstance()

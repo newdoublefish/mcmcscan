@@ -20,18 +20,68 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             />
-        <EditText
-            android:id="@+id/sn"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/rl_userName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv"
-            />
-        <Button
-            android:id="@+id/scan"
-            android:layout_below="@id/sn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/scan"
-            />
+            android:background="@drawable/rectangle_edittext">
+
+            <!--ImageView
+                android:id="@+id/iv_userIconName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingBottom="15dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp"
+                android:src="@mipmap/ic_edittextuname" /-->
+            <TextView
+                android:id="@+id/iv_userIconName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingBottom="15dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp"
+                android:text="@string/sn"
+                />
+
+            <View
+                android:id="@+id/viewName"
+                android:layout_width="1dip"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/iv_userIconName"
+                android:background="@color/colorCursor" />
+
+            <EditText
+                android:id="@+id/sn"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_toLeftOf="@id/scan"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/viewName"
+                android:background="@null"
+                android:windowSoftInputMode="adjustPan"
+                android:ems="19"
+                android:hint="  编码"
+                android:textColorHint="@color/colorCursor"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/scan"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@mipmap/barcode"
+                />
+
+        </RelativeLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

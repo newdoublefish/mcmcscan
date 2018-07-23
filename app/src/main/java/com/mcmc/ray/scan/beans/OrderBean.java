@@ -111,6 +111,7 @@ public class OrderBean {
         private String name;
         private String sn;
         private String vendor;
+        private List<String> defaultVendor;
 
         public String getName() {
             return name;
@@ -134,6 +135,14 @@ public class OrderBean {
 
         public void setVendor(String vendor) {
             this.vendor = vendor;
+        }
+
+        public List<String> getDefaultVendor() {
+            return defaultVendor;
+        }
+
+        public void setDefaultVendor(List<String> defaultVendor) {
+            this.defaultVendor = defaultVendor;
         }
     }
 
